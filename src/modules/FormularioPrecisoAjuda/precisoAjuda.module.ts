@@ -6,4 +6,4 @@ import { FormularioArmazenados } from "./precisoAjuda.dm";
     controllers: [PrecisoAjudaController],
     providers: [FormularioArmazenados],
 })
-export class UsuarioModule {}
+export class PrecisoAjudaModule {}
