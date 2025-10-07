@@ -21,7 +21,7 @@ async function bootstrap() {
     )
     .setVersion('1.0')
     .addTag('usuarios')
-    .addTag('Instituição')
+    .addTag('institution')
     .addTag('Formulario1')
     .addTag('Formulario2')
     .build();
