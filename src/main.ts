@@ -22,8 +22,8 @@ async function bootstrap() {
     .setVersion('1.0')
     .addTag('usuarios')
     .addTag('Instituição')
-    .addTag('Formulario1')
-    .addTag('Formulario2')
+    .addTag('FormularioPrecisoAjuda')
+    .addTag('FormularioQueroAjudar')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
