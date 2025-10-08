@@ -7,9 +7,14 @@ import {
   IsOptional,
   IsUrl,
   IsObject,
+  IsNumber,
 } from 'class-validator';
 
 export class CreateInstitutionDto {
+  @IsNumber()
+  @IsOptional()
+  id?: number;
+
   @IsNotEmpty()
   @IsString()
   @ApiProperty({
@@ -36,7 +41,7 @@ export class CreateInstitutionDto {
   @IsOptional()
   @IsString()
   @ApiPropertyOptional({
-    example: '(14) 99876-5432',
+    example: '(14)9 9999-9999',
     description: 'Telefone de contato da instituição',
   })
   phone?: string;
