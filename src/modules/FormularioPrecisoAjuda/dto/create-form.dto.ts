@@ -1,36 +1,42 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, IsNotEmpty } from "class-validator";
+import { IsEmail, IsNotEmpty, IsString } from "class-validator";
 
 export class CreateFormDto {
-    @IsNotEmpty()
+
+    @IsString()
+    @IsNotEmpty({message: 'O nome não pode ser vazio'})
     @ApiProperty({ example: 'John Doe', description: 'Nome do usuario' })
     name: string;
 
-    @IsNotEmpty()
+    @IsString()
+    @IsNotEmpty({message: 'O telefone não pode ser vazio'})
     @ApiProperty({ example: '(14)99733-9712', description: 'Telefone do usuario' })
     telefone: string;
 
+    @IsString()
+    @IsNotEmpty({message: 'O email não pode ser vazio'})
     @IsEmail()
     @ApiProperty({ example: 'teste@gmail.com', description: 'Email do usuario' })
     email: string;
 
-    @IsNotEmpty()
+    @IsString()
+    @IsNotEmpty({message: 'O assunto não pode ser vazio'})
     @ApiProperty({ example: 'Estou com sintomas...', description: 'Descrição do que sente' })
     assunto: string;
 
-    @IsNotEmpty()
+    @IsString()
+    @IsNotEmpty({message: 'A instituição não pode ser vazio'})
     @ApiProperty({ example: 'CVV', description: 'Nome da instituição que quer pedir Ajuda' })
     instituicao: string;
 
-    @IsNotEmpty()
+    @IsString()
+    @IsNotEmpty({message: 'A cidade não pode ser vazio'})
     @ApiProperty({ example: 'Bauru', description: 'Nome da cidade do usuario' })
     cidade: string;
 
-    @IsNotEmpty()
+    @IsString()
+    @IsNotEmpty({message: 'O estado não pode ser vazio'})
     @ApiProperty({ example: 'São Paulo', description: 'Nome do estado do usuario' })
     estado: string;
-
-
-
 
 }
