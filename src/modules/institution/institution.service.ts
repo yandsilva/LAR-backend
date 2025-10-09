@@ -8,6 +8,10 @@ import { UpdateInstitutionDto } from 'src/modules/institution/dto/update-institu
 export class InstitutionService {
   constructor(private prisma: PrismaService) {}
 
+  findByEmail(email: string) {
+    return this.prisma.institution.findUnique({ where: { email } });
+  }
+
   async create(createInstitutionDto: CreateInstitutionDto) {
     const hanshedPassword = await bcrypt.hash(
       createInstitutionDto.password,
