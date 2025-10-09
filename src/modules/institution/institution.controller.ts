@@ -62,8 +62,8 @@ export class InstitutionController {
     }
   }
 
-  @Delete()
-  deleteOne(id: number) {
+  @Delete(':id')
+  deleteOne(@Param('id') id: number) {
     try {
       return new ErrorHandleDto(
         'Instituição deletada com sucesso',
