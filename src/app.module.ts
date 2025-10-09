@@ -7,11 +7,13 @@ import { PrecisoAjudaModule } from './modules/FormularioPrecisoAjuda/precisoAjud
 // import { AppService } from './app.service';
 
 @Module({
-<<<<<<< HEAD
-  imports: [PrecisoAjudaModule,QueroAjudarModule],
-=======
-  imports: [UserModule, InstitutionModule],
->>>>>>> 42d9af8dc3e4699d0e699c0ee0eb5262ffefacec
+  imports: [
+    UserModule,
+    InstitutionModule,
+    PrecisoAjudaModule,
+    QueroAjudarModule,
+  ],
+
   // controllers: [AppController],
   // providers: [AppService],
 })
