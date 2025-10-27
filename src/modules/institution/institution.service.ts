@@ -8,8 +8,16 @@ import { UpdateInstitutionDto } from 'src/modules/institution/dto/update-institu
 export class InstitutionService {
   constructor(private prisma: PrismaService) {}
 
-  findByEmail(email: string) {
-    return this.prisma.institution.findUnique({ where: { email } });
+  async validateInstitution(email: string, password: string) {
+    const institution = await this.prisma.institution.findUnique({
+      where: { email },
+    });
+
+    if (institution && (await bcrypt.compare(password, institution.password))) {
+      const { password, ...result } = institution;
+      return result;
+    }
+    throw new NotFoundException("'Credenciais inválidas'");
   }
 
   async create(createInstitutionDto: CreateInstitutionDto) {

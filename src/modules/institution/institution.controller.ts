@@ -20,7 +20,21 @@ import { InstitutionService } from 'src/modules/institution/institution.service'
 export class InstitutionController {
   constructor(private readonly institutionService: InstitutionService) {}
 
-  @Post()
+  @Post('sign-in')
+  async login(@Body() body: CreateInstitutionDto) {
+    try {
+      const institution = await this.institutionService.validateInstitution(
+        body.email,
+        body.password,
+      );
+      return institution;
+    } catch (error) {
+      console.log(error);
+      throw new InternalServerErrorException('Erro inesperado do servidor');
+    }
+  }
+
+  @Post('sign-up')
   async create(
     @Body() createInstitutionDto: CreateInstitutionDto,
   ): Promise<ErrorHandleDto> {
