@@ -5,6 +5,6 @@ import { InstitutionService } from 'src/modules/institution/institution.service'
 @Module({
   imports: [],
   controllers: [InstitutionController],
-  providers: [InstitutionService],
+  providers: [],
 })
 export class InstitutionModule {}

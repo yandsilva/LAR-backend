@@ -1,12 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateInstitutionDto } from 'src/modules/institution/dto/create-institution.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
+
 import * as bcrypt from 'bcrypt';
 import { UpdateInstitutionDto } from 'src/modules/institution/dto/update-institution';
 
 @Injectable()
 export class InstitutionService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma) {}
 
   async validateInstitution(email: string, password: string) {
     const institution = await this.prisma.institution.findUnique({
