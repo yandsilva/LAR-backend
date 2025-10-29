@@ -4,7 +4,7 @@ import {v4 as uuid} from 'uuid';
 import { RetornoPadraoDTO } from "../dto/retorno.dto";
 import { QueroAjudaEntity } from "./queroAjudar.Entity";
 import { FormularioArmazenadosAjudar } from "./queroAjudar.dm";
-import { CreateFormDto } from "../FormularioPrecisoAjuda/dto/create-form.dto";
+import { CreateFormDto2 } from "./dto/create-form-ajudar.dto";
 import { ListaFormularioQueroDTO } from "./dto/listaFormularioQuero.dto";
 
 @Controller('/FormularioQueroAjudar')
@@ -15,14 +15,14 @@ export class QueroAjudarController {
     }
 
    @Post()
-          async criaUsuario(@Body() dadosForumlario: CreateFormDto): Promise<RetornoPadraoDTO> {
+          async criaUsuario(@Body() dadosForumlario: CreateFormDto2): Promise<RetornoPadraoDTO> {
       try {
           const novoFormulario = new QueroAjudaEntity(
               uuid(),
               dadosForumlario.name,
               dadosForumlario.telefone,
               dadosForumlario.email,
-              dadosForumlario.assunto,
+              dadosForumlario.valor,
               dadosForumlario.instituicao,
               dadosForumlario.cidade,
               dadosForumlario.estado

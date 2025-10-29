@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsEmail, IsNotEmpty, IsString } from "class-validator";
 
-export class CreateFormDto {
+export class CreateFormDto2 {
 
        @IsString()
        @IsNotEmpty({message: 'O nome não pode ser vazio'})
@@ -20,9 +20,9 @@ export class CreateFormDto {
        email: string;
    
        @IsString()
-       @IsNotEmpty({message: 'O assunto não pode ser vazio'})
-       @ApiProperty({ example: 'Estou com sintomas...', description: 'Descrição do que sente' })
-       assunto: string;
+       @IsNotEmpty({message: 'O valor não pode ser vazio'})
+       @ApiProperty({ example: 'R$1.000,00', description: 'Valor que quer doar' })
+       valor: string;
    
        @IsString()
        @IsNotEmpty({message: 'A instituição não pode ser vazio'})
