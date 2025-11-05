@@ -1,62 +1,48 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Inject, Injectable } from '@nestjs/common';
 import { CreateUserDto } from 'src/modules/user/dto/create-user.dto';
+import { v4 as uuid } from 'uuid';
 import * as bcrypt from 'bcrypt';
-import { UpdateUserDto } from 'src/modules/user/dto/update-user.dto';
+
+import { USERS } from 'src/modules/user/entities/users.entity';
+import { Repository } from 'typeorm';
+import { RetornoPadraoDTO } from 'src/modules/dto/retorno.dto';
 
 @Injectable()
 export class UserService {
-  constructor(private prisma) {}
+  constructor(
+    @Inject('USERS_REPOSITORY')
+    private usersRepository: Repository<USERS>,
+  ) {}
 
-  async create(createUserDto: CreateUserDto) {
-    const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
-
-    const existingUser = await this.prisma.user.findFirst({
+  async create(createUserDto: CreateUserDto): Promise<RetornoPadraoDTO> {
+    const existingUser = await this.usersRepository.findOne({
       where: {
-        email: createUserDto.email,
+        EMAIL: createUserDto.EMAIL,
       },
     });
 
     if (existingUser) {
-      throw new Error('Usuário já existe');
+      throw new ConflictException('Usuario já existe!');
     }
 
-    return this.prisma.user.create({
-      data: {
-        ...createUserDto,
-        password: hashedPassword,
-      },
-    });
-  }
+    const hashedPassword = await bcrypt.hash(createUserDto.PASSWORD, 10);
 
-  findAll() {
-    return this.prisma.user.findMany({
-      select: { id: true, name: true, email: true },
-    });
-  }
+    let newUser = new USERS();
+    newUser.ID = uuid();
+    ((newUser.NOME = createUserDto.NAME),
+      (newUser.EMAIL = createUserDto.EMAIL),
+      (newUser.PASSWORD = hashedPassword));
 
-  async findOne(id: number) {
-    const user = await this.prisma.user.findUnique({
-      where: { id },
-      select: { id: true, name: true, email: true },
-    });
-    if (!user) throw new NotFoundException(`Usuario #${id} não encontrado`);
-    return user;
-  }
-
-  async update(id: number, updateUserDto: UpdateUserDto) {
-    const data: any = { ...updateUserDto };
-
-    if (updateUserDto.password) {
-      data.password = await bcrypt.hash(updateUserDto.password, 10);
-    }
-
-    return this.prisma.user.update({
-      where: { id },
-      data,
-    });
-  }
-
-  remove(id: number) {
-    return this.prisma.user.delete({ where: { id } });
+    return this.usersRepository
+      .save(newUser)
+      .then((result) => {
+        return <RetornoPadraoDTO>{
+          data: newUser.ID,
+          message: 'usuario criado com sucesso',
+        };
+      })
+      .catch((error) => {
+        throw new Error('Erro ao inserir usuario', error);
+      });
   }
 }

@@ -17,7 +17,7 @@ export const databaseProviders = [
         password: '',
         database: 'LAR',
         entities: [join(__dirname, '/../**/*.entity.{js,ts}')],
-        synchronize: true,
+        synchronize: false,
       });
       return dataSource.initialize();
     },

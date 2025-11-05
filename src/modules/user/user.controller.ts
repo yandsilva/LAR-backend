@@ -12,15 +12,14 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import { ErrorHandleDto } from 'src/common/errors/error.util';
 import { CreateUserDto } from 'src/modules/user/dto/create-user.dto';
-import { UpdateUserDto } from 'src/modules/user/dto/update-user.dto';
 import { UserService } from 'src/modules/user/user.service';
 
-@Controller('users')
+@Controller('/users')
 @ApiTags('usuarios')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post()
+  @Post('/sign-up')
   async create(@Body() createUserDto: CreateUserDto): Promise<ErrorHandleDto> {
     try {
       return new ErrorHandleDto(
@@ -33,25 +32,5 @@ export class UserController {
       }
       throw new InternalServerErrorException('Erro inesperado do servidor');
     }
-  }
-
-  @Get()
-  findAll() {
-    return this.userService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
-  }
-
-  @Put(':id')
-  update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(+id, updateUserDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
   }
 }
