@@ -15,7 +15,7 @@ export const databaseProviders = [
         port: 3306,
         username: 'root',
         password: '',
-        database: 'authentication',
+        database: 'LAR',
         entities: [join(__dirname, '/../**/*.entity.{js,ts}')],
         synchronize: true,
       });
