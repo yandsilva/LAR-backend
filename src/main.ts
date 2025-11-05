@@ -24,6 +24,7 @@ async function bootstrap() {
     .addTag('Instituição')
     .addTag('FormularioPrecisoAjuda')
     .addTag('FormularioQueroAjudar')
+    .addTag('FormularioFaleConosco')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
