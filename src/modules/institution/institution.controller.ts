@@ -1,18 +1,6 @@
-import {
-  Body,
-  ConflictException,
-  Controller,
-  Delete,
-  Get,
-  InternalServerErrorException,
-  Param,
-  Post,
-  Put,
-} from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { ErrorHandleDto } from 'src/common/errors/error.util';
 import { CreateInstitutionDto } from 'src/modules/institution/dto/create-institution.dto';
-import { UpdateInstitutionDto } from 'src/modules/institution/dto/update-institution';
 import { InstitutionService } from 'src/modules/institution/institution.service';
 
 @Controller('institution')
@@ -20,71 +8,42 @@ import { InstitutionService } from 'src/modules/institution/institution.service'
 export class InstitutionController {
   constructor(private readonly institutionService: InstitutionService) {}
 
-  @Post('sign-in')
-  async login(@Body() body: CreateInstitutionDto) {
-    try {
-      const institution = await this.institutionService.validateInstitution(
-        body.email,
-        body.password,
-      );
-      return institution;
-    } catch (error) {
-      console.log(error);
-      throw new InternalServerErrorException('Erro inesperado do servidor');
-    }
-  }
-
   @Post('sign-up')
-  async create(
-    @Body() createInstitutionDto: CreateInstitutionDto,
-  ): Promise<ErrorHandleDto> {
-    try {
-      return new ErrorHandleDto(
-        'Instituição criada com sucesso',
-        this.institutionService.create(createInstitutionDto),
-      );
-    } catch (error) {
-      if (error.message === 'Instituição já existe') {
-        throw new ConflictException('Usuário já existe');
-      }
-      throw new InternalServerErrorException('Erro inesperado do servidor');
-    }
+  async create(@Body() createInstitutionDto: CreateInstitutionDto) {
+    return await this.institutionService.registerInstitution(
+      createInstitutionDto,
+    );
   }
 
-  @Get()
-  findAll() {
-    return this.institutionService.findAll();
-  }
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.institutionService.findOne(+id);
+  // }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.institutionService.findOne(+id);
-  }
+  // @Put(':id')
+  // updateOne(
+  //   @Param('id') id: number,
+  //   @Body() updateInstitutionDto: UpdateInstitutionDto,
+  // ) {
+  //   try {
+  //     return new ErrorHandleDto(
+  //       'Instituição atualizada com sucesso',
+  //       this.institutionService.updateOne(id, updateInstitutionDto),
+  //     );
+  //   } catch (error) {
+  //     throw new InternalServerErrorException('Erro inesperado do servidor');
+  //   }
+  // }
 
-  @Put(':id')
-  updateOne(
-    @Param('id') id: number,
-    @Body() updateInstitutionDto: UpdateInstitutionDto,
-  ) {
-    try {
-      return new ErrorHandleDto(
-        'Instituição atualizada com sucesso',
-        this.institutionService.updateOne(id, updateInstitutionDto),
-      );
-    } catch (error) {
-      throw new InternalServerErrorException('Erro inesperado do servidor');
-    }
-  }
-
-  @Delete(':id')
-  deleteOne(@Param('id') id: number) {
-    try {
-      return new ErrorHandleDto(
-        'Instituição deletada com sucesso',
-        this.institutionService.deleteOne(id),
-      );
-    } catch (error) {
-      throw new InternalServerErrorException('Erro inesperado do servidor');
-    }
-  }
+  // @Delete(':id')
+  // deleteOne(@Param('id') id: number) {
+  //   try {
+  //     return new ErrorHandleDto(
+  //       'Instituição deletada com sucesso',
+  //       this.institutionService.deleteOne(id),
+  //     );
+  //   } catch (error) {
+  //     throw new InternalServerErrorException('Erro inesperado do servidor');
+  //   }
+  // }
 }

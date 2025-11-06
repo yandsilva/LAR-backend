@@ -1,115 +1,54 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { v4 as uuid } from 'uuid';
 import { CreateInstitutionDto } from 'src/modules/institution/dto/create-institution.dto';
-
 import * as bcrypt from 'bcrypt';
-import { UpdateInstitutionDto } from 'src/modules/institution/dto/update-institution';
+import { Repository } from 'typeorm';
+import { INSTITUTION } from 'src/modules/institution/entities/institution.entity';
+import { RetornoPadraoDTO } from 'src/modules/dto/retorno.dto';
 
 @Injectable()
 export class InstitutionService {
-  constructor(private prisma) {}
+  constructor(
+    @Inject('INSTITUTION_REPOSITORY')
+    private readonly institutionRepository: Repository<INSTITUTION>,
+  ) {}
 
-  async validateInstitution(email: string, password: string) {
-    const institution = await this.prisma.institution.findUnique({
-      where: { email },
-    });
-
-    if (institution && (await bcrypt.compare(password, institution.password))) {
-      const { password, ...result } = institution;
-      return result;
-    }
-    throw new NotFoundException("'Credenciais inválidas'");
-  }
-
-  async create(createInstitutionDto: CreateInstitutionDto) {
-    const hanshedPassword = await bcrypt.hash(
-      createInstitutionDto.password,
-      10,
-    );
-
-    const existingInstitution = await this.prisma.institution.findFirst({
+  async registerInstitution(
+    createInstitutionDto: CreateInstitutionDto,
+  ): Promise<RetornoPadraoDTO> {
+    const existingInstitution = await this.institutionRepository.findOne({
       where: {
-        email: createInstitutionDto.email,
+        EMAIL: createInstitutionDto.EMAIL,
       },
     });
 
     if (existingInstitution) {
-      throw new Error('Instituição já existe');
+      throw new ConflictException('Instituição já existe!');
     }
 
-    return await this.prisma.institution.create({
-      data: {
-        name: createInstitutionDto.name,
-        email: createInstitutionDto.email,
-        password: hanshedPassword,
-      },
-    });
-  }
+    const hashedPassword = await bcrypt.hash(createInstitutionDto.PASSWORD, 10);
 
-  findAll() {
-    return this.prisma.institution.findMany({
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        phone: true,
-        about: true,
-        url: true,
-        socialLinks: true,
-      },
-    });
-  }
+    let newInstitution = new INSTITUTION();
+    newInstitution.ID = uuid();
+    ((newInstitution.EMPRESA = createInstitutionDto.EMPRESA),
+      (newInstitution.EMAIL = createInstitutionDto.EMAIL),
+      (newInstitution.PASSWORD = hashedPassword));
 
-  async findOne(id: number) {
-    const institution = await this.prisma.institution.findUnique({
-      where: { id },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        phone: true,
-        about: true,
-        url: true,
-        socialLinks: true,
-      },
-    });
-
-    if (!institution) {
-      throw new NotFoundException(`Instituição #${id} não encontrado`);
-    }
-    return institution;
-  }
-
-  async updateOne(id: number, updateInstitutionDto: UpdateInstitutionDto) {
-    const existingInstitution = await this.prisma.institution.findUnique({
-      where: { id },
-    });
-
-    if (!existingInstitution) {
-      throw new NotFoundException('Instituição não encontrada');
-    }
-
-    return await this.prisma.institution.update({
-      where: { id },
-      data: {
-        phone: updateInstitutionDto.phone ?? existingInstitution.phone,
-        about: updateInstitutionDto.about ?? existingInstitution.about,
-        url: updateInstitutionDto.url ?? existingInstitution.url,
-        socialLinks: {
-          ...updateInstitutionDto.socialLinks,
-        },
-      },
-    });
-  }
-
-  async deleteOne(id: number) {
-    const existingInstitution = await this.prisma.institution.findUnique({
-      where: { id },
-    });
-
-    if (!existingInstitution) {
-      throw new NotFoundException('Instituição não encontrada');
-    }
-
-    return await this.prisma.institution.delete({ where: { id } });
+    return this.institutionRepository
+      .save(newInstitution)
+      .then((result) => {
+        return <RetornoPadraoDTO>{
+          data: newInstitution.ID,
+          message: 'Instituição criada com sucesso',
+        };
+      })
+      .catch((error) => {
+        throw new Error('Erro ao Inserir instituição', error);
+      });
   }
 }

@@ -13,7 +13,7 @@ import {
 export class CreateInstitutionDto {
   @IsNumber()
   @IsOptional()
-  id?: number;
+  ID?: number;
 
   @IsNotEmpty()
   @IsString()
@@ -21,14 +21,14 @@ export class CreateInstitutionDto {
     example: 'Instituto Lumina',
     description: 'Nome da instituição',
   })
-  name: string;
+  EMPRESA: string;
 
   @IsEmail()
   @ApiProperty({
     example: 'contato@institutolumina.org',
     description: 'Email da instituição (único)',
   })
-  email: string;
+  EMAIL: string;
 
   @IsNotEmpty()
   @MinLength(6)
@@ -36,7 +36,7 @@ export class CreateInstitutionDto {
     example: '123456',
     description: 'Senha de acesso da instituição',
   })
-  password: string;
+  PASSWORD: string;
 
   @IsOptional()
   @IsString()
@@ -44,7 +44,7 @@ export class CreateInstitutionDto {
     example: '(14)9 9999-9999',
     description: 'Telefone de contato da instituição',
   })
-  phone?: string;
+  PHONE?: string;
 
   @IsOptional()
   @IsString()
@@ -52,7 +52,7 @@ export class CreateInstitutionDto {
     example: 'Instituição voltada ao desenvolvimento humano e educacional.',
     description: 'Descrição ou biografia da instituição',
   })
-  about?: string;
+  ABOUT?: string;
 
   @IsOptional()
   @IsUrl({}, { message: 'Imagem deve ser uma URL válida' })
@@ -60,7 +60,7 @@ export class CreateInstitutionDto {
     example: 'https://meuservidor.com/imagens/instituicao-logo.png',
     description: 'Imagem representativa ou logo da instituição',
   })
-  image?: string;
+  IMAGE?: string;
 
   @IsOptional()
   @IsUrl({}, { message: 'URL deve ser válida' })
@@ -68,7 +68,7 @@ export class CreateInstitutionDto {
     example: 'https://institutolumina.org',
     description: 'Site oficial ou página principal da instituição',
   })
-  url?: string;
+  URL?: string;
 
   @IsOptional()
   @IsObject()
@@ -81,5 +81,5 @@ export class CreateInstitutionDto {
     description:
       'Links das redes sociais da instituição (armazenados como JSON)',
   })
-  socialLinks?: Record<string, string>;
+  SOCIALLINKS?: Record<string, string>;
 }

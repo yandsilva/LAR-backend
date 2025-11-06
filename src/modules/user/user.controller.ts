@@ -10,7 +10,6 @@ import {
   Put,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { ErrorHandleDto } from 'src/common/errors/error.util';
 import { CreateUserDto } from 'src/modules/user/dto/create-user.dto';
 import { UserService } from 'src/modules/user/user.service';
 
@@ -20,12 +19,9 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post('/sign-up')
-  async create(@Body() createUserDto: CreateUserDto): Promise<ErrorHandleDto> {
+  async create(@Body() createUserDto: CreateUserDto) {
     try {
-      return new ErrorHandleDto(
-        'Usuario criado com sucesso',
-        this.userService.create(createUserDto),
-      );
+      return this.userService.create(createUserDto);
     } catch (error) {
       if (error.message === 'Usuário já existe') {
         throw new ConflictException('Usuário já existe');

@@ -2,7 +2,6 @@ import { ConflictException, Inject, Injectable } from '@nestjs/common';
 import { CreateUserDto } from 'src/modules/user/dto/create-user.dto';
 import { v4 as uuid } from 'uuid';
 import * as bcrypt from 'bcrypt';
-
 import { USERS } from 'src/modules/user/entities/users.entity';
 import { Repository } from 'typeorm';
 import { RetornoPadraoDTO } from 'src/modules/dto/retorno.dto';
