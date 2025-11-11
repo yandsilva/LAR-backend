@@ -1,9 +1,15 @@
 import { Module } from "@nestjs/common";
 import { QueroAjudarController } from "./queroAjudar.controller";
-import { FormularioArmazenadosAjudar } from "./queroAjudar.dm";
+import { DatabaseModule } from "src/database/database.module";
+import { queroAjudarProviders } from "./queroAjudar.providers";
+import { QueroAjudarService } from "./queroAjudar.service";
 
 @Module({
+    imports: [DatabaseModule],
     controllers: [QueroAjudarController],
-    providers: [FormularioArmazenadosAjudar],
+    providers: [
+        ...queroAjudarProviders,
+        QueroAjudarService
+    ],
 })
 export class QueroAjudarModule {}

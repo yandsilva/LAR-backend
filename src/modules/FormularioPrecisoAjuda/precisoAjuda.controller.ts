@@ -25,7 +25,9 @@ export class PrecisoAjudaController {
                 dadosForumlario.assunto,
                 dadosForumlario.instituicao,
                 dadosForumlario.cidade,
-                dadosForumlario.estado
+                dadosForumlario.estado,
+                dadosForumlario.tremor,
+                dadosForumlario.cansaco
             );
 
             this.Formulario.AdicionarFormulario(novoFormulario);
@@ -56,7 +58,9 @@ export class PrecisoAjudaController {
                     usuario.assunto,
                     usuario.instituicao,
                     usuario.cidade,
-                    usuario.estado
+                    usuario.estado,
+                    usuario.tremor,
+                    usuario.cansaco
                 )
             );
 

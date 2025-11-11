@@ -9,10 +9,11 @@ export class PrecisoAjudaEntity{
     instituicao: string;
     cidade: string;
     estado: string;
-
+    tremor: boolean;
+    cansaco: boolean;
 
     constructor(id: string, name: string, telefone: string, email: string, assunto: string, instituicao: string, cidade: string,
-                estado: string
+                estado: string, tremor: boolean, cansaco: boolean
     ) {
     
         this.id = id;
@@ -23,6 +24,8 @@ export class PrecisoAjudaEntity{
         this.instituicao = instituicao;
         this.cidade = cidade;
         this.estado = estado;
+        this.tremor = tremor;
+        this.cansaco = cansaco;
     }
     
 }

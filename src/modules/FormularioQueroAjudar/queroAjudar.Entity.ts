@@ -1,28 +1,29 @@
 import * as bcrypt from "bcrypt"
+import { Column, Entity, PrimaryColumn } from "typeorm";
 
-export class QueroAjudaEntity{
-    id: string;
-    name: string;
-    telefone: string;
-    email: string;
-    assunto: string;
-    instituicao: string;
-    cidade: string;
-    estado: string;
+@Entity()
+export class QUEROAJUDAR{
+    @PrimaryColumn()
+    ID: string;
 
+    @Column({length: 255})
+    NAME: string;
 
-    constructor(id: string, name: string, telefone: string, email: string, assunto: string, instituicao: string, cidade: string,
-                estado: string
-    ) {
-    
-        this.id = id;
-        this.name = name;
-        this.telefone = telefone;
-        this.email = email;
-        this.assunto = assunto;
-        this.instituicao = instituicao;
-        this.cidade = cidade;
-        this.estado = estado;
-    }
-    
+    @Column({length: 255})
+    TELEFONE: string;
+
+    @Column({length: 255})
+    EMAIL: string;
+
+    @Column({length: 255})
+    VALOR: string;
+
+    @Column({length: 255})
+    INSTITUICAO: string;
+
+    @Column({length: 255})
+    CIDADE: string;
+
+    @Column({length: 255})
+    ESTADO: string;    
 }

@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, IsNotEmpty, IsString } from "class-validator";
+import { IsBoolean, IsEmail, IsNotEmpty, IsOptional, IsString } from "class-validator";
 
 export class CreateFormDto {
 
@@ -38,5 +38,15 @@ export class CreateFormDto {
     @IsNotEmpty({message: 'O estado não pode ser vazio'})
     @ApiProperty({ example: 'São Paulo', description: 'Nome do estado do usuario' })
     estado: string;
+
+    @IsBoolean()
+    @ApiProperty({ example: true, description: 'Confirma se o usuário esta com tremor' })
+    @IsOptional()
+    tremor: boolean;
+
+    @IsBoolean()
+    @ApiProperty({ example: true, description: 'Confirma se o usuário esta com cansaco' })
+    @IsOptional()
+    cansaco: boolean;
 
 }

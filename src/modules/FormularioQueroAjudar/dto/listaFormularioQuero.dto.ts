@@ -1,12 +1,12 @@
 export class ListaFormularioQueroDTO{
     constructor(
-            readonly id: string,
-            readonly name: string,
-            readonly telefone: string,
-            readonly email: string,
-            readonly valor: string,
-            readonly instituicao: string,
-            readonly cidade: string,
-            readonly estado: string
+            readonly ID: string,
+            readonly NAME: string,
+            readonly TELEFONE: string,
+            readonly EMAIL: string,
+            readonly VALOR: string,
+            readonly INSTITUICAO: string,
+            readonly CIDADE: string,
+            readonly ESTADO: string
     ){}
 }
