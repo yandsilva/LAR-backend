@@ -1,88 +1,33 @@
 import { Body, Controller, Delete, Get, InternalServerErrorException, NotFoundException, Param, Post } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
-import { PrecisoAjudaEntity } from "./precisoAjuda.Entity";
 import { CreateFormDto } from "./dto/create-form.dto";
-import { FormularioArmazenados } from "./precisoAjuda.dm";
 import {v4 as uuid} from 'uuid';
 import { RetornoPadraoDTO } from "../dto/retorno.dto";
 import { ListaFormularioPrecisoDTO } from "./dto/listaFormularioPreciso.dto";
+import { PrecisoAjudaService } from "./precisoAjuda.service";
 
 @Controller('/FormularioPrecisoAjuda')
 @ApiTags('FormularioPrecisoAjuda')
 export class PrecisoAjudaController {
-    constructor(private Formulario : FormularioArmazenados){
-
-    }
+    constructor(private readonly PrecisoAjudaService: PrecisoAjudaService){}
 
     @Post()
-        async criaUsuario(@Body() dadosForumlario: CreateFormDto): Promise<RetornoPadraoDTO> {
-        try {
-            const novoFormulario = new PrecisoAjudaEntity(
-                uuid(),
-                dadosForumlario.name,
-                dadosForumlario.telefone,
-                dadosForumlario.email,
-                dadosForumlario.assunto,
-                dadosForumlario.instituicao,
-                dadosForumlario.cidade,
-                dadosForumlario.estado,
-                dadosForumlario.tremor,
-                dadosForumlario.cansaco
-            );
-
-            this.Formulario.AdicionarFormulario(novoFormulario);
-
-            const retorno = new RetornoPadraoDTO(
-                'Formulario enviado com sucesso!',
-                novoFormulario
-            );
-            return retorno;
-        } catch (error) {
-            if (error.message === 'Usuário não encontrado') {
-                throw new NotFoundException(`Usuário não encontrado`);
-            }
-            throw new InternalServerErrorException('Erro inesperado no servidor');
+            async criaUsuario(@Body() dadosForumlario: CreateFormDto): Promise<RetornoPadraoDTO> {
+            var retorno = await this.PrecisoAjudaService.enviar(dadosForumlario);   
+            return retorno  
         }
-    }
-
-        @Get()
-        async retornaUsuario(): Promise<ListaFormularioPrecisoDTO[]> {
-            const formularioListados = this.Formulario.Formulario;
-
-            const ListaRetorno = formularioListados.map(usuario => 
-                new ListaFormularioPrecisoDTO(
-                    usuario.id,
-                    usuario.name,
-                    usuario.telefone,
-                    usuario.email,
-                    usuario.assunto,
-                    usuario.instituicao,
-                    usuario.cidade,
-                    usuario.estado,
-                    usuario.tremor,
-                    usuario.cansaco
-                )
-            );
-
-            return ListaRetorno;
+    
+    @Get()
+            async retornaUsuario(): Promise<ListaFormularioPrecisoDTO[]> {
+            var retorno = await this.PrecisoAjudaService.listar();   
+            return retorno
         }
-
-
-        @Delete('/:id')
-                    async removeFormulario(@Param('id') id: string) {
-                        try {
-                        const formularioRemovido = await this.Formulario.removeFormulario(id);
-                        return new RetornoPadraoDTO(     
-                            'Usuário removido com sucesso',
-                            formularioRemovido
-                        );
-                        } catch (error) {
-                            if(error.message === 'Usuário não encontrado'){
-                                throw new NotFoundException(`Usuário com id ${id} não encontrado`);
-                            }
-                            throw new InternalServerErrorException('Erro inesperado no servidor');
-        
-                        }
-                    }
+    
+    
+    @Delete('/:id')
+            async removeFormulario(@Param('id') id: string) {
+            var retorno = await this.PrecisoAjudaService.remover(id);   
+            return retorno
+        }
 
 }

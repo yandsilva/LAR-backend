@@ -1,31 +1,75 @@
 import * as bcrypt from "bcrypt"
+import { Column, Entity, PrimaryColumn } from "typeorm";
 
-export class PrecisoAjudaEntity{
-    id: string;
-    name: string;
-    telefone: string;
-    email: string;
-    assunto: string;
-    instituicao: string;
-    cidade: string;
-    estado: string;
-    tremor: boolean;
-    cansaco: boolean;
+@Entity()
+export class PRECISOAJUDA{
+    @PrimaryColumn()
+    ID: string;
 
-    constructor(id: string, name: string, telefone: string, email: string, assunto: string, instituicao: string, cidade: string,
-                estado: string, tremor: boolean, cansaco: boolean
-    ) {
-    
-        this.id = id;
-        this.name = name;
-        this.telefone = telefone;
-        this.email = email;
-        this.assunto = assunto;
-        this.instituicao = instituicao;
-        this.cidade = cidade;
-        this.estado = estado;
-        this.tremor = tremor;
-        this.cansaco = cansaco;
-    }
-    
+    @Column({length: 255})
+    NAME: string;
+
+    @Column({length: 255})
+    TELEFONE: string;
+
+    @Column({length: 255})
+    EMAIL: string;
+
+    @Column({length: 255})
+    ASSUNTO: string;
+
+    @Column({length: 255})
+    INSTITUICAO: string;
+
+    @Column({length: 255})
+    CIDADE: string;
+
+    @Column({length: 255})
+    ESTADO: string;
+
+    @Column()
+    TREMOR: boolean;
+
+    @Column()
+    CANSACO: boolean;
+
+    @Column()
+    DESANIMO: boolean;
+
+    @Column()
+    FALTAAR: boolean;
+
+    @Column()
+    AGONIA: boolean;
+
+    @Column()
+    FALTAFOCO: boolean ;
+
+    @Column()
+    ALTERACAOHUMOR: boolean;
+
+    @Column()
+    SENSACAOCONEXAO: boolean;
+
+    @Column()
+    PREOCUPACAOPESO: boolean;
+
+    @Column()
+    PERDAINTERESSE: boolean;
+
+    @Column()
+    ABUSOPSICOLOGICO: boolean;
+
+    @Column()
+    ABUSOFISICO: boolean;
+
+    @Column()
+    ABUSOSEXUAL: boolean;
+
+    @Column()
+    ABUSOPATRIMONIAL: boolean;
+
+    @Column()
+    ABUSOMORAL: boolean;  
+
 }
