@@ -1,26 +1,28 @@
 import * as bcrypt from "bcrypt"
-
-export class FaleConoscoEntity{
-    id: string;
-    name: string;
-    telefone: string;
-    email: string;
-    endereco: string;
-    assunto: string;
-    mensagem: string;
+import { Column, Entity, PrimaryColumn } from "typeorm";
 
 
+@Entity()
+export class FALECONOSCO{
+    @PrimaryColumn()
+    ID: string;
 
-    constructor(id: string, name: string, telefone: string, email: string, endereco: string, assunto: string, mensagem: string
-    ) {
-        this.id = id;
-        this.name = name;
-        this.telefone = telefone;
-        this.email = email;
-        this.endereco = endereco;
-        this.assunto = assunto;
-        this.mensagem = mensagem;
+    @Column({length: 255})
+    NAME: string;
 
-    }
+    @Column({length: 255})
+    TELEFONE: string;
+
+    @Column({length: 255})
+    EMAIL: string;
+
+    @Column({length: 255})
+    ENDERECO: string;
+
+    @Column({length: 255})
+    ASSUNTO: string;
+
+    @Column({length: 255})
+    MENSAGEM: string;
     
 }

@@ -5,6 +5,7 @@ import { DatabaseModule } from 'src/database/database.module';
 import { APP_FILTER } from '@nestjs/core';
 import { HttpExceptionFilter } from 'src/common/errors/HttpExceptionFilter';
 import { InstitutionModule } from 'src/modules/institution/institution.module';
+import { FaleConoscoModule } from './modules/FormularioFaleConosco/faleConosco.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { InstitutionModule } from 'src/modules/institution/institution.module';
     PrecisoAjudaModule,
     QueroAjudarModule,
     InstitutionModule,
+    FaleConoscoModule,
   ],
   providers: [
     {
