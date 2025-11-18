@@ -10,6 +10,8 @@ import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
 import { INSTITUTION } from 'src/modules/institution/entities/institution.entity';
 import { RetornoPadraoDTO } from 'src/modules/dto/retorno.dto';
+import { UpdateInstitutionDto } from 'src/modules/institution/dto/update-institution';
+import { LoginInstitutionDto } from 'src/modules/institution/dto/login-institution.dto';
 
 @Injectable()
 export class InstitutionService {
@@ -17,6 +19,24 @@ export class InstitutionService {
     @Inject('INSTITUTION_REPOSITORY')
     private readonly institutionRepository: Repository<INSTITUTION>,
   ) {}
+
+  async findByEmail(
+    LoginInstitutionDto: LoginInstitutionDto,
+  ): Promise<RetornoPadraoDTO> {
+    const findEmail = await this.institutionRepository.findOne({
+      where: { EMAIL: LoginInstitutionDto.EMAIL },
+    });
+
+    console.log(findEmail);
+
+    if (!findEmail) {
+      throw new NotFoundException('Instituição não encontrada');
+    }
+    return <RetornoPadraoDTO>{
+      data: findEmail,
+      message: 'Instituição encontrada com sucesso',
+    };
+  }
 
   async registerInstitution(
     createInstitutionDto: CreateInstitutionDto,
@@ -50,5 +70,19 @@ export class InstitutionService {
       .catch((error) => {
         throw new Error('Erro ao Inserir instituição', error);
       });
+  }
+
+  async update(dto: UpdateInstitutionDto) {
+    const institution = await this.institutionRepository.findOne({
+      where: { ID: dto.ID },
+    });
+
+    if (!institution) {
+      throw new Error('Instituição não encontrada');
+    }
+
+    Object.assign(institution, dto);
+
+    return await this.institutionRepository.save(institution);
   }
 }

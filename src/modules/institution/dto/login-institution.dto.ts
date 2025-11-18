@@ -1,26 +1,23 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import {
-  IsString,
   IsEmail,
   IsNotEmpty,
   MinLength,
   IsOptional,
-  IsUrl,
-  IsObject,
   IsNumber,
 } from 'class-validator';
 
 export class LoginInstitutionDto {
   @IsNumber()
   @IsOptional()
-  id?: number;
+  ID?: string;
 
   @IsEmail()
   @ApiProperty({
     example: 'contato@institutolumina.org',
     description: 'Email da instituição (único)',
   })
-  email: string;
+  EMAIL: string;
 
   @IsNotEmpty()
   @MinLength(6)
@@ -28,5 +25,5 @@ export class LoginInstitutionDto {
     example: '123456',
     description: 'Senha de acesso da instituição',
   })
-  password: string;
+  PASSWORD: string;
 }

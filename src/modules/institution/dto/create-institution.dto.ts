@@ -13,7 +13,7 @@ import {
 export class CreateInstitutionDto {
   @IsNumber()
   @IsOptional()
-  ID?: number;
+  ID?: string;
 
   @IsNotEmpty()
   @IsString()

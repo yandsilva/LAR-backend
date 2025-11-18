@@ -1,6 +1,9 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+
 import { CreateInstitutionDto } from 'src/modules/institution/dto/create-institution.dto';
+import { LoginInstitutionDto } from 'src/modules/institution/dto/login-institution.dto';
+import { UpdateInstitutionDto } from 'src/modules/institution/dto/update-institution';
 import { InstitutionService } from 'src/modules/institution/institution.service';
 
 @Controller('institution')
@@ -13,6 +16,28 @@ export class InstitutionController {
     return await this.institutionService.registerInstitution(
       createInstitutionDto,
     );
+  }
+
+  @Post('sign-in')
+  async signIn(@Body() dto: LoginInstitutionDto) {
+    const institution = await this.institutionService.findByEmail(dto);
+
+    return {
+      success: true,
+      message: 'Instituição encontrada com sucesso.',
+      data: institution,
+    };
+  }
+
+  @Post('update')
+  async update(@Body() dto: UpdateInstitutionDto) {
+    const updated = await this.institutionService.update(dto);
+
+    return {
+      success: true,
+      message: 'Instituição atualizada com sucesso.',
+      data: updated,
+    };
   }
 
   // @Get(':id')

@@ -6,6 +6,7 @@ import { institutionProviders } from 'src/modules/institution/provider';
 
 @Module({
   imports: [DatabaseModule],
+  exports: [InstitutionService],
   controllers: [InstitutionController],
   providers: [...institutionProviders, InstitutionService],
 })
