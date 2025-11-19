@@ -11,7 +11,6 @@ import { Repository } from 'typeorm';
 import { INSTITUTION } from 'src/modules/institution/entities/institution.entity';
 import { RetornoPadraoDTO } from 'src/modules/dto/retorno.dto';
 import { UpdateInstitutionDto } from 'src/modules/institution/dto/update-institution';
-import { LoginInstitutionDto } from 'src/modules/institution/dto/login-institution.dto';
 
 @Injectable()
 export class InstitutionService {
@@ -30,6 +29,10 @@ export class InstitutionService {
     return this.institutionRepository.findOne({
       where: { ID: id },
     });
+  }
+
+  async findAll() {
+    return this.institutionRepository.find();
   }
 
   async registerInstitution(
@@ -78,5 +81,38 @@ export class InstitutionService {
     Object.assign(institution, dto);
 
     return await this.institutionRepository.save(institution);
+  }
+
+  async handlePasswordReset(
+    userId: string,
+    {
+      currentPassword,
+      newPassword,
+    }: { currentPassword: string; newPassword: string },
+  ) {
+    const institution = await this.institutionRepository.findOne({
+      where: { ID: userId },
+    });
+
+    if (!institution) {
+      throw new NotFoundException('Instituição não encontrada');
+    }
+
+    const isPasswordValid = await bcrypt.compare(
+      currentPassword,
+      institution.PASSWORD,
+    );
+
+    if (!isPasswordValid) {
+      throw new ConflictException('Senha atual incorreta');
+    }
+
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+
+    await this.institutionRepository.update(userId, {
+      PASSWORD: hashedNewPassword,
+    });
+
+    return { message: 'Senha atualizada com sucesso' };
   }
 }
