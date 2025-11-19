@@ -1,6 +1,15 @@
-import { Body, Controller, Get, Post, Res } from '@nestjs/common';
-import type { Response } from 'express';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
+import type { Request, Response } from 'express';
 import { AuthService } from 'src/modules/auth/auth.service';
+import { JwtAuthGuard } from 'src/modules/auth/jwt-auth.guard';
 import { LoginInstitutionDto } from 'src/modules/institution/dto/login-institution.dto';
 import { InstitutionService } from 'src/modules/institution/institution.service';
 
@@ -25,11 +34,14 @@ export class AuthController {
     }
     const token = await this.authService.login(institution);
 
-    res.cookie('auth_token', token, {
+    const isProd = process.env.NODE_ENV === 'production';
+    const COOKIE_NAME = process.env.COOKIE_NAME || 'auth_token';
+
+    res.cookie(COOKIE_NAME, token, {
       httpOnly: true,
       sameSite: 'lax',
-      secure: 'production' === process.env.NODE_ENV,
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      secure: isProd && process.env.COOKIE_SECURE === 'true',
+      maxAge: Number(process.env.JWT_EXPIRES_IN_MS || 3600 * 1000), // fallback to 1 hour
     });
 
     const { PASSWORD, ...institutionData } = institution;
@@ -46,8 +58,9 @@ export class AuthController {
     return { success: true };
   }
 
-  //   @Get('me')
-  //     async getMe(@Res({ passthrough: true }) req: Request) {
-  //     return req.institution;
-  //     }
+  @UseGuards(JwtAuthGuard)
+  @Get('me')
+  async getMe(@Req() req: Request) {
+    return req.user;
+  }
 }

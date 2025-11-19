@@ -11,11 +11,11 @@ import { AuthModule } from 'src/modules/auth/auth.module';
 @Module({
   imports: [
     DatabaseModule,
+    AuthModule,
     PrecisoAjudaModule,
     QueroAjudarModule,
     InstitutionModule,
     FaleConoscoModule,
-    AuthModule,
   ],
   providers: [
     {

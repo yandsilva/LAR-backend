@@ -6,20 +6,21 @@ import { InstitutionService } from 'src/modules/institution/institution.service'
 
 function cookieExtractor(req: Request) {
   let token = null;
-  if (req && req.cookies) {
-    token = req.cookies['jwt'];
-  }
+  if (req && req.cookies)
+    token = req.cookies[process.env.COOKIE_NAME || 'auth_token'];
   return token;
 }
 
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy) {
+export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   constructor(private institutionService: InstitutionService) {
     super({
       jwtFromRequest: cookieExtractor,
       ignoreExpiration: false,
-      secretOrKey: 'process.env.JWT_SECRET',
+      secretOrKey: process.env.JWT_SECRET || 'troque_esse_seguro',
     });
+
+    console.log('JWT Strategy initialized');
   }
 
   async validate(payload: any) {
