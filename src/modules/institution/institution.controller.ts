@@ -1,5 +1,6 @@
-import { Body, Controller, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { error } from 'console';
 
 import { CreateInstitutionDto } from 'src/modules/institution/dto/create-institution.dto';
 import { LoginInstitutionDto } from 'src/modules/institution/dto/login-institution.dto';
@@ -18,16 +19,27 @@ export class InstitutionController {
     );
   }
 
-  @Post('sign-in')
-  async signIn(@Body() dto: LoginInstitutionDto) {
-    const institution = await this.institutionService.findByEmail(dto);
+  @Get(':id')
+  async getById(@Param('id') id: string) {
+    const institution = await this.institutionService.findById(id);
+    if (!institution) {
+      return { error: 'Instituição não encontrada' };
+    }
 
-    return {
-      success: true,
-      message: 'Instituição encontrada com sucesso.',
-      data: institution,
-    };
+    const { PASSWORD, ...result } = institution;
+    return result;
   }
+
+  // @Post('sign-in')
+  // async signIn(@Body() dto: LoginInstitutionDto) {
+  //   const institution = await this.institutionService.findByEmail(dto);
+
+  //   return {
+  //     success: true,
+  //     message: 'Instituição encontrada com sucesso.',
+  //     data: institution,
+  //   };
+  // }
 
   @Post(':id')
   async update(@Param('id') id: string, @Body() dto: UpdateInstitutionDto) {
@@ -40,11 +52,6 @@ export class InstitutionController {
       data: updated,
     };
   }
-
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.institutionService.findOne(+id);
-  // }
 
   // @Put(':id')
   // updateOne(

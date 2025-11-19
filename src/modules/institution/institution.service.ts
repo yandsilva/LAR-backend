@@ -20,20 +20,16 @@ export class InstitutionService {
     private readonly institutionRepository: Repository<INSTITUTION>,
   ) {}
 
-  async findByEmail(
-    LoginInstitutionDto: LoginInstitutionDto,
-  ): Promise<RetornoPadraoDTO> {
-    const findEmail = await this.institutionRepository.findOne({
-      where: { EMAIL: LoginInstitutionDto.EMAIL },
+  async findByEmail(email: string) {
+    return this.institutionRepository.findOne({
+      where: { EMAIL: email },
     });
+  }
 
-    if (!findEmail) {
-      throw new NotFoundException('Instituição não encontrada');
-    }
-    return <RetornoPadraoDTO>{
-      data: findEmail,
-      message: 'Instituição encontrada com sucesso',
-    };
+  async findById(id: string) {
+    return this.institutionRepository.findOne({
+      where: { ID: id },
+    });
   }
 
   async registerInstitution(

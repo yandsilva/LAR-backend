@@ -2,44 +2,31 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { InstitutionService } from 'src/modules/institution/institution.service';
-import { LoginInstitutionDto } from 'src/modules/institution/dto/login-institution.dto';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private institutionService: InstitutionService,
-    private jwtService: JwtService,
+    private readonly institutionService: InstitutionService,
+    private readonly jwtService: JwtService,
   ) {}
 
-  async login(loginInstitutionDto: LoginInstitutionDto) {
-    const institution =
-      await this.institutionService.findByEmail(loginInstitutionDto);
+  async validateInstitution(email: string, password: string) {
+    const institution = await this.institutionService.findByEmail(email);
 
-    if (!institution) throw new UnauthorizedException('Credenciais inválidas');
+    if (!institution) {
+      throw new UnauthorizedException('Instituição não encontrada');
+    }
 
-    const ok = await bcrypt.compare(
-      institution.data.PASSWORD,
-      loginInstitutionDto.PASSWORD,
-    );
-    if (!ok) throw new UnauthorizedException('Credenciais inválidas');
+    const passwordValid = await bcrypt.compare(password, institution.PASSWORD);
+    if (!passwordValid) {
+      throw new UnauthorizedException('Email ou Senha inválida');
+    }
 
-    const accessTokenPayload = this.jwtService.sign({
-      INSTITUTION_ID: institution.data.INSTITUTION_ID,
-      EMAIL: institution.data.EMAIL,
-    });
+    return institution;
+  }
 
-    const refreshTokenPayload = this.jwtService.sign(
-      {
-        INSTITUTION_ID: institution.data.INSTITUTION_ID,
-        EMAIL: institution.data.EMAIL,
-      },
-      { expiresIn: '7d' },
-    );
-    const token = {
-      accessToken: accessTokenPayload,
-      refreshToken: refreshTokenPayload,
-    };
-
-    return { token };
+  async login(institution: any) {
+    const payload = { email: institution.EMAIL, sub: institution.ID };
+    return this.jwtService.sign(payload);
   }
 }

@@ -6,6 +6,7 @@ import { APP_FILTER } from '@nestjs/core';
 import { HttpExceptionFilter } from 'src/common/errors/HttpExceptionFilter';
 import { InstitutionModule } from 'src/modules/institution/institution.module';
 import { FaleConoscoModule } from './modules/FormularioFaleConosco/faleConosco.module';
+import { AuthModule } from 'src/modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { FaleConoscoModule } from './modules/FormularioFaleConosco/faleConosco.m
     QueroAjudarModule,
     InstitutionModule,
     FaleConoscoModule,
+    AuthModule,
   ],
   providers: [
     {
