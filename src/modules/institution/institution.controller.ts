@@ -1,4 +1,4 @@
-import { Body, Controller, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Param, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { CreateInstitutionDto } from 'src/modules/institution/dto/create-institution.dto';
@@ -29,7 +29,7 @@ export class InstitutionController {
     };
   }
 
-  @Put('/:id')
+  @Post(':id')
   async update(@Param('id') id: string, @Body() dto: UpdateInstitutionDto) {
     console.log(id, dto);
     const updated = await this.institutionService.update(id, dto);

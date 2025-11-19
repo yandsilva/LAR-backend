@@ -27,8 +27,6 @@ export class InstitutionService {
       where: { EMAIL: LoginInstitutionDto.EMAIL },
     });
 
-    console.log(findEmail);
-
     if (!findEmail) {
       throw new NotFoundException('Instituição não encontrada');
     }
