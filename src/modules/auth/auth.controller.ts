@@ -39,9 +39,9 @@ export class AuthController {
 
     res.cookie(COOKIE_NAME, token, {
       httpOnly: true,
+      secure: false,
       sameSite: 'lax',
-      secure: isProd && process.env.COOKIE_SECURE === 'true',
-      maxAge: Number(process.env.JWT_EXPIRES_IN_MS || 3600 * 1000), // fallback to 1 hour
+      maxAge: 3600 * 1000,
     });
 
     const { PASSWORD, ...institutionData } = institution;
