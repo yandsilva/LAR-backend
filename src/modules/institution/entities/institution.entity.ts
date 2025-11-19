@@ -13,4 +13,22 @@ export class INSTITUTION {
 
   @Column()
   PASSWORD: string;
+
+  @Column()
+  PHONE: string;
+
+  @Column()
+  ABOUT: string;
+
+  @Column()
+  IMAGE: string;
+
+  @Column()
+  INSTAGRAM: string;
+
+  @Column()
+  FACEBOOK: string;
+
+  @Column()
+  LINKEDIN: string;
 }

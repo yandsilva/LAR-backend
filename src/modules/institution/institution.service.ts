@@ -72,9 +72,9 @@ export class InstitutionService {
       });
   }
 
-  async update(dto: UpdateInstitutionDto) {
+  async update(id: string, dto: UpdateInstitutionDto) {
     const institution = await this.institutionRepository.findOne({
-      where: { ID: dto.ID },
+      where: { ID: id },
     });
 
     if (!institution) {

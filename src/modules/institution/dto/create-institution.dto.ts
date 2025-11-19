@@ -71,15 +71,26 @@ export class CreateInstitutionDto {
   URL?: string;
 
   @IsOptional()
-  @IsObject()
+  @IsUrl({}, { message: 'URL deve ser válida' })
   @ApiPropertyOptional({
-    example: {
-      instagram: 'https://instagram.com/instituto.lumina',
-      facebook: 'https://facebook.com/instituto.lumina',
-      linkedin: 'https://linkedin.com/company/instituto-lumina',
-    },
-    description:
-      'Links das redes sociais da instituição (armazenados como JSON)',
+    example: 'https://institutolumina.org',
+    description: 'Site oficial ou página principal da instituição',
   })
-  SOCIALLINKS?: Record<string, string>;
+  INSTAGRAM?: string;
+
+  @IsOptional()
+  @IsUrl({}, { message: 'URL deve ser válida' })
+  @ApiPropertyOptional({
+    example: 'https://institutolumina.org',
+    description: 'Site oficial ou página principal da instituição',
+  })
+  FACEBOOK?: string;
+
+  @IsOptional()
+  @IsUrl({}, { message: 'URL deve ser válida' })
+  @ApiPropertyOptional({
+    example: 'https://institutolumina.org',
+    description: 'Site oficial ou página principal da instituição',
+  })
+  LINKEDIN?: string;
 }
