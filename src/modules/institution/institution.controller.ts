@@ -4,6 +4,7 @@ import {
   Get,
   Param,
   Post,
+  Put,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -53,15 +54,17 @@ export class InstitutionController {
     };
   }
 
-  @Post('change-password')
+  @Put('change-password')
   @UseGuards(JwtAuthGuard)
   async changePassword(
     @Req() req,
-    @Body() body: { currentPassword: string; newPassword: string },
+    @Body()
+    body: {
+      currentPassword: string;
+      newPassword: string;
+      confirmNewPassword: string;
+    },
   ) {
-    return this.institutionService.handlePasswordReset(
-      req.institution.ID,
-      body,
-    );
+    return this.institutionService.handlePasswordReset(req.user.ID, body);
   }
 }
