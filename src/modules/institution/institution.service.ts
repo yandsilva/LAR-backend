@@ -32,7 +32,9 @@ export class InstitutionService {
   }
 
   async findAll() {
-    return this.institutionRepository.find();
+    return this.institutionRepository.find({
+      select: ['ID', 'EMPRESA', 'PHONE'],
+    });
   }
 
   async registerInstitution(
@@ -88,7 +90,12 @@ export class InstitutionService {
     {
       currentPassword,
       newPassword,
-    }: { currentPassword: string; newPassword: string },
+      confirmNewPassword,
+    }: {
+      currentPassword: string;
+      newPassword: string;
+      confirmNewPassword: string;
+    },
   ) {
     const institution = await this.institutionRepository.findOne({
       where: { ID: userId },
@@ -96,6 +103,10 @@ export class InstitutionService {
 
     if (!institution) {
       throw new NotFoundException('Instituição não encontrada');
+    }
+
+    if (newPassword !== confirmNewPassword) {
+      throw new ConflictException('As novas senhas não coincidem');
     }
 
     const isPasswordValid = await bcrypt.compare(
@@ -109,9 +120,12 @@ export class InstitutionService {
 
     const hashedNewPassword = await bcrypt.hash(newPassword, 10);
 
-    await this.institutionRepository.update(userId, {
-      PASSWORD: hashedNewPassword,
-    });
+    await this.institutionRepository.update(
+      { ID: userId },
+      {
+        PASSWORD: hashedNewPassword,
+      },
+    );
 
     return { message: 'Senha atualizada com sucesso' };
   }
