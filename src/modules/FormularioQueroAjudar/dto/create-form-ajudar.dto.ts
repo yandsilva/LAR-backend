@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, IsNotEmpty, IsString } from "class-validator";
+import { IsEmail, IsNotEmpty, IsOptional, IsString } from "class-validator";
 
 export class CreateFormDto2 {
 
@@ -24,10 +24,6 @@ export class CreateFormDto2 {
        @ApiProperty({ example: 'R$1.000,00', description: 'Valor que quer doar' })
        VALOR: string;
    
-       @IsString()
-       @IsNotEmpty({message: 'A instituição não pode ser vazio'})
-       @ApiProperty({ example: 'CVV', description: 'Nome da instituição que quer pedir Ajuda' })
-       INSTITUICAO: string;
    
        @IsString()
        @IsNotEmpty({message: 'A cidade não pode ser vazio'})
@@ -39,6 +35,9 @@ export class CreateFormDto2 {
        @ApiProperty({ example: 'São Paulo', description: 'Nome do estado do usuario' })
        ESTADO: string;
 
-
+       @IsOptional()
+       @IsString()
+       @ApiProperty({ example: 'institution-id-123', description: 'ID da instituição associada ao formulário' })
+       INSTITUTION_ID?: string;
 
 }
