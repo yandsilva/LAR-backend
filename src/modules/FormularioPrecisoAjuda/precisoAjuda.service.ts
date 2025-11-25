@@ -23,7 +23,6 @@ export class PrecisoAjudaService{
         formAjuda.TELEFONE = dados.TELEFONE;
         formAjuda.EMAIL = dados.EMAIL;
         formAjuda.ASSUNTO = dados.ASSUNTO;
-        formAjuda.INSTITUICAO = dados.INSTITUICAO;
         formAjuda.CIDADE = dados.CIDADE;
         formAjuda.ESTADO = dados.ESTADO;
         formAjuda.TREMOR = dados.TREMOR;
@@ -41,6 +40,7 @@ export class PrecisoAjudaService{
         formAjuda.ABUSOSEXUAL = dados.ABUSOSEXUAL;
         formAjuda.ABUSOPATRIMONIAL = dados.ABUSOPATRIMONIAL;
         formAjuda.ABUSOMORAL = dados.ABUSOMORAL;
+        formAjuda.INSTITUICAO = dados.INSTITUTION_ID ? { ID: dados.INSTITUTION_ID } as any : null;
 
         return this.precisoAjudaRepository.save(formAjuda)
         .then((result) => {

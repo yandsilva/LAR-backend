@@ -25,11 +25,6 @@ export class CreateFormDto {
     ASSUNTO: string;
 
     @IsString()
-    @IsNotEmpty({message: 'A instituição não pode ser vazio'})
-    @ApiProperty({ example: 'CVV', description: 'Nome da instituição que quer pedir Ajuda' })
-    INSTITUICAO: string;
-
-    @IsString()
     @IsNotEmpty({message: 'A cidade não pode ser vazio'})
     @ApiProperty({ example: 'Bauru', description: 'Nome da cidade do usuario' })
     CIDADE: string;
@@ -113,5 +108,11 @@ export class CreateFormDto {
     @ApiProperty({ example: true, description: 'Confirma se o usuário sofreu abuso moral' })
     @IsOptional()
     ABUSOMORAL: boolean;
+
+    @IsOptional()
+    @IsString()
+    @ApiProperty({ example: 'institution-id-123', description: 'ID da instituição associada ao formulário' })
+    INSTITUTION_ID?: string;
+
 
 }
