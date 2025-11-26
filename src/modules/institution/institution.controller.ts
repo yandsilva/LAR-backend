@@ -6,9 +6,13 @@ import {
   Post,
   Put,
   Req,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags } from '@nestjs/swagger';
+import { institutionUploadConfig } from 'src/common/multer/multer';
 import { JwtAuthGuard } from 'src/modules/auth/jwt-auth.guard';
 import { CreateInstitutionDto } from 'src/modules/institution/dto/create-institution.dto';
 import { UpdateInstitutionDto } from 'src/modules/institution/dto/update-institution';
@@ -43,8 +47,17 @@ export class InstitutionController {
   }
 
   @Post(':id')
-  async update(@Param('id') id: string, @Body() dto: UpdateInstitutionDto) {
-    console.log(id, dto);
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(FileInterceptor('IMAGE', institutionUploadConfig))
+  async update(
+    @Param('id') id: string,
+    @Body() dto: UpdateInstitutionDto,
+    @UploadedFile() IMAGE?: Express.Multer.File,
+  ) {
+    console.log(id, dto, IMAGE);
+    if (IMAGE) {
+      dto.IMAGE = `/uploads/institutions/images/${IMAGE.filename}`;
+    }
     const updated = await this.institutionService.update(id, dto);
 
     return {
