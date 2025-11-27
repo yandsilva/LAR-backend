@@ -1,4 +1,4 @@
-import { ConflictException, Inject, Injectable } from '@nestjs/common';
+import { ConflictException, Inject, Injectable, Param } from '@nestjs/common';
 import { CreateUserDto } from 'src/modules/user/dto/create-user.dto';
 import { v4 as uuid } from 'uuid';
 import * as bcrypt from 'bcrypt';
@@ -6,6 +6,7 @@ import { USERS } from 'src/modules/user/entities/users.entity';
 import { Repository } from 'typeorm';
 import { RetornoPadraoDTO } from 'src/modules/dto/retorno.dto';
 import { ChangePasswordDto } from './dto/change-password.dto';
+import { LoginUserDto } from './dto/login.dto';
 
 
 
@@ -48,6 +49,24 @@ export class UserService {
       });
   }
 
+async login(dto:LoginUserDto){
+  const existingUser=await this.usersRepository.findOne({
+    where:{
+      EMAIL:dto.EMAIL
+    }
+  })
+  console.log(existingUser)
+  if(!existingUser){
+    throw new ConflictException('Email ou Senha inválidos.')
+  } 
+  const validatePassword = await bcrypt.compare(dto.PASSWORD,existingUser.PASSWORD)
+  console.log(existingUser)
+  if(!validatePassword){
+    throw new ConflictException('Email ou Senha inválidos.')
+  } 
+  return existingUser
+}
+
 async changePassword(dto: ChangePasswordDto, userId: string) {
   const { CURRENTPASSWORD, NEWPASSWORD, CONFIRMNEWPASSWORD } = dto;
    
@@ -82,7 +101,7 @@ const isPasswordValid = await bcrypt.compare(
     );
 
     return { message: 'Senha atualizada com sucesso' };
-
-
 }
+
+
 }

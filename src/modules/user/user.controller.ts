@@ -13,6 +13,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from 'src/modules/user/dto/create-user.dto';
 import { UserService } from 'src/modules/user/user.service';
 import { ChangePasswordDto } from './dto/change-password.dto';
+import { LoginUserDto } from './dto/login.dto';
 
 
 @Controller('users')
@@ -20,7 +21,7 @@ import { ChangePasswordDto } from './dto/change-password.dto';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post('sign-up')
+@Post('sign-up')
   async create(@Body() createUserDto: CreateUserDto) {
     console.log(createUserDto)
     try {
@@ -32,6 +33,11 @@ export class UserController {
       throw new InternalServerErrorException('Erro inesperado do servidor');
     }
   }
+@Post('login')
+ async login(@Body() dto: LoginUserDto) {
+  return this.userService.login(dto)
+ }
+
 
 @Put('change-password/:id')
 async changePassword(
