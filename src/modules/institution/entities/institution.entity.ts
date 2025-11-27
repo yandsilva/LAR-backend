@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToMany, PrimaryColumn } from 'typeorm';
+import { PRECISOAJUDA } from '../../FormularioPrecisoAjuda/precisoAjuda.Entity';
+import { QUEROAJUDAR } from 'src/modules/FormularioQueroAjudar/queroAjudar.Entity';
 
 @Entity()
 export class INSTITUTION {
@@ -31,4 +33,12 @@ export class INSTITUTION {
 
   @Column()
   LINKEDIN: string;
+
+  @OneToMany(() => PRECISOAJUDA, (PRECISOAJUDA) => PRECISOAJUDA.INSTITUICAO)
+  PRECISOAJUDA: PRECISOAJUDA[];
+
+  @OneToMany(() => QUEROAJUDAR, (QUEROAJUDAR) => QUEROAJUDAR.INSTITUICAO)
+  QUEROAJUDAR: QUEROAJUDAR[];
+
+
 }

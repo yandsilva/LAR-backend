@@ -13,7 +13,8 @@ export class PrecisoAjudaController {
 
     @Post()
             async criaUsuario(@Body() dadosForumlario: CreateFormDto): Promise<RetornoPadraoDTO> {
-            var retorno = await this.PrecisoAjudaService.enviar(dadosForumlario);   
+            // console.log(dadosForumlario);
+                var retorno = await this.PrecisoAjudaService.enviar(dadosForumlario);   
             return retorno  
         }
     

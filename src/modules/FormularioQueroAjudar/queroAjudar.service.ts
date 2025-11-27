@@ -23,9 +23,9 @@ export class QueroAjudarService{
         formAjudar.TELEFONE = dados.TELEFONE;
         formAjudar.EMAIL = dados.EMAIL;
         formAjudar.VALOR = dados.VALOR;
-        formAjudar.INSTITUICAO = dados.INSTITUICAO;
         formAjudar.CIDADE = dados.CIDADE;
         formAjudar.ESTADO = dados.ESTADO;
+        formAjudar.INSTITUICAO = dados.INSTITUTION_ID ? { ID: dados.INSTITUTION_ID } as any : null;
 
         return this.queroAjudarRepository.save(formAjudar)
         .then((result) => {

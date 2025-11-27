@@ -5,8 +5,8 @@ export class ListaFormularioQueroDTO{
             readonly TELEFONE: string,
             readonly EMAIL: string,
             readonly VALOR: string,
-            readonly INSTITUICAO: string,
             readonly CIDADE: string,
-            readonly ESTADO: string
+            readonly ESTADO: string,
+            readonly INSTITUTION_ID?: string
     ){}
 }

@@ -5,7 +5,6 @@ export class ListaFormularioPrecisoDTO{
         readonly TELEFONE: string,
         readonly EMAIL: string,
         readonly ASSUNTO: string,
-        readonly INSTITUICAO: string,
         readonly CIDADE: string,
         readonly ESTADO: string,
         readonly TREMOR?: boolean,
@@ -22,7 +21,8 @@ export class ListaFormularioPrecisoDTO{
         readonly ABUSOFISICO?: boolean,
         readonly ABUSOSEXUAL?: boolean,
         readonly ABUSOPATRIMONIAL?: boolean,
-        readonly ABUSOMORAL?: boolean
+        readonly ABUSOMORAL?: boolean,
+        readonly INSTITUTION_ID?: string
 ) {}
 
 }

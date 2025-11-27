@@ -1,5 +1,6 @@
 import * as bcrypt from 'bcrypt';
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+import { INSTITUTION } from '../institution/entities/institution.entity';
 
 @Entity()
 export class PRECISOAJUDA {
@@ -17,9 +18,6 @@ export class PRECISOAJUDA {
 
   @Column({ length: 255 })
   ASSUNTO: string;
-
-  @Column({ length: 255 })
-  INSTITUICAO: string;
 
   @Column({ length: 255 })
   CIDADE: string;
@@ -71,4 +69,12 @@ export class PRECISOAJUDA {
 
   @Column()
   ABUSOMORAL: boolean;
+
+
+  @ManyToOne(() => INSTITUTION, (instituicao) => instituicao.PRECISOAJUDA, {
+    onDelete: 'SET NULL'
+  })
+  @JoinColumn({ name: 'INSTITUTION_ID' }) // FK no banco
+  INSTITUICAO: INSTITUTION;
+
 }
