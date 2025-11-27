@@ -7,6 +7,7 @@ import { HttpExceptionFilter } from 'src/common/errors/HttpExceptionFilter';
 import { InstitutionModule } from 'src/modules/institution/institution.module';
 import { FaleConoscoModule } from './modules/FormularioFaleConosco/faleConosco.module';
 import { AuthModule } from 'src/modules/auth/auth.module';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { AuthModule } from 'src/modules/auth/auth.module';
     QueroAjudarModule,
     InstitutionModule,
     FaleConoscoModule,
+    UserModule
   ],
   providers: [
     {
