@@ -11,11 +11,11 @@ export const databaseProviders = [
     useFactory: async () => {
       const dataSource = new DataSource({
         type: 'mysql',
-        host: 'localhost',
+        host: '50.116.112.16',
         port: 3306,
-        username: 'root',
-        password: '',
-        database: 'LAR',
+        username: 'vitali04_adm_lugardeapoio',
+        password: 'Apoiamos!@#123',
+        database: 'vitali04_lugardeapoio',
         entities: [join(__dirname, '/../**/*.entity.{js,ts}')],
         synchronize: false,
       });
