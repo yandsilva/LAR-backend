@@ -8,7 +8,7 @@ import { v4 as uuid } from 'uuid';
 import { CreateInstitutionDto } from 'src/modules/institution/dto/create-institution.dto';
 import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
-import { INSTITUTION } from 'src/modules/institution/entities/institution.entity';
+import { Institution } from 'src/modules/institution/entities/institution.entity';
 import { RetornoPadraoDTO } from 'src/modules/dto/retorno.dto';
 import { UpdateInstitutionDto } from 'src/modules/institution/dto/update-institution';
 
@@ -16,7 +16,7 @@ import { UpdateInstitutionDto } from 'src/modules/institution/dto/update-institu
 export class InstitutionService {
   constructor(
     @Inject('INSTITUTION_REPOSITORY')
-    private readonly institutionRepository: Repository<INSTITUTION>,
+    private readonly institutionRepository: Repository<Institution>,
   ) {}
 
   async findByEmail(email: string) {
@@ -52,7 +52,7 @@ export class InstitutionService {
 
     const hashedPassword = await bcrypt.hash(createInstitutionDto.PASSWORD, 10);
 
-    let newInstitution = new INSTITUTION();
+    let newInstitution = new Institution();
     newInstitution.ID = uuid();
     ((newInstitution.EMPRESA = createInstitutionDto.EMPRESA),
       (newInstitution.EMAIL = createInstitutionDto.EMAIL),

@@ -1,9 +1,9 @@
 import * as bcrypt from 'bcrypt';
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
-import { INSTITUTION } from '../institution/entities/institution.entity';
+import { Institution } from '../institution/entities/institution.entity';
 
 @Entity('precisoajuda')
-export class PRECISOAJUDA {
+export class PrecisoAjuda {
   @PrimaryColumn()
   ID: string;
 
@@ -70,9 +70,9 @@ export class PRECISOAJUDA {
   @Column()
   ABUSOMORAL: boolean;
 
-  @ManyToOne(() => INSTITUTION, (instituicao) => instituicao.PRECISOAJUDA, {
+  @ManyToOne(() => Institution, (instituicao) => instituicao.PrecisoAjuda, {
     onDelete: 'SET NULL',
   })
   @JoinColumn({ name: 'INSTITUTION_ID' }) // FK no banco
-  INSTITUICAO: INSTITUTION;
+  Institution: Institution;
 }

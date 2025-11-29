@@ -2,7 +2,7 @@ import * as bcrypt from 'bcrypt';
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity('faleconosco')
-export class FALECONOSCO {
+export class FaleConosco {
   @PrimaryColumn()
   ID: string;
 

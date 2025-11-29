@@ -1,9 +1,9 @@
 import { Column, Entity, JoinColumn, OneToMany, PrimaryColumn } from 'typeorm';
-import { PRECISOAJUDA } from '../../FormularioPrecisoAjuda/precisoAjuda.Entity';
-import { QUEROAJUDAR } from 'src/modules/FormularioQueroAjudar/queroAjudar.Entity';
+import { PrecisoAjuda } from '../../FormularioPrecisoAjuda/precisoAjuda.Entity';
+import { QueroAjudar } from 'src/modules/FormularioQueroAjudar/queroAjudar.Entity';
 
 @Entity('institution')
-export class INSTITUTION {
+export class Institution {
   @PrimaryColumn()
   ID: string;
 
@@ -34,9 +34,9 @@ export class INSTITUTION {
   @Column()
   LINKEDIN: string;
 
-  @OneToMany(() => PRECISOAJUDA, (PRECISOAJUDA) => PRECISOAJUDA.INSTITUICAO)
-  PRECISOAJUDA: PRECISOAJUDA[];
+  @OneToMany(() => PrecisoAjuda, (PrecisoAjuda) => PrecisoAjuda.Institution)
+  PrecisoAjuda: PrecisoAjuda[];
 
-  @OneToMany(() => QUEROAJUDAR, (QUEROAJUDAR) => QUEROAJUDAR.INSTITUICAO)
-  QUEROAJUDAR: QUEROAJUDAR[];
+  @OneToMany(() => QueroAjudar, (QueroAjudar) => QueroAjudar.Institution)
+  QueroAjudar: QueroAjudar[];
 }

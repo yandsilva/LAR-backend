@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { PRECISOAJUDA } from './precisoAjuda.Entity';
+import { PrecisoAjuda } from './precisoAjuda.Entity';
 import { Repository } from 'typeorm';
 import { CreateFormDto } from './dto/create-form.dto';
 import { RetornoPadraoDTO } from '../dto/retorno.dto';
@@ -9,15 +9,15 @@ import { v4 as uuid } from 'uuid';
 export class PrecisoAjudaService {
   constructor(
     @Inject('PRECISOAJUDA_REPOSITORY')
-    private precisoAjudaRepository: Repository<PRECISOAJUDA>,
+    private precisoAjudaRepository: Repository<PrecisoAjuda>,
   ) {}
 
-  async listar(): Promise<PRECISOAJUDA[]> {
+  async listar(): Promise<PrecisoAjuda[]> {
     return this.precisoAjudaRepository.find();
   }
 
   async enviar(dados: CreateFormDto): Promise<RetornoPadraoDTO> {
-    let formAjuda = new PRECISOAJUDA();
+    let formAjuda = new PrecisoAjuda();
     formAjuda.ID = uuid();
     formAjuda.NAME = dados.NAME;
     formAjuda.TELEFONE = dados.TELEFONE;
@@ -40,7 +40,7 @@ export class PrecisoAjudaService {
     formAjuda.ABUSOSEXUAL = dados.ABUSOSEXUAL;
     formAjuda.ABUSOPATRIMONIAL = dados.ABUSOPATRIMONIAL;
     formAjuda.ABUSOMORAL = dados.ABUSOMORAL;
-    formAjuda.INSTITUICAO = dados.INSTITUTION_ID
+    formAjuda.Institution = dados.INSTITUTION_ID
       ? ({ ID: dados.INSTITUTION_ID } as any)
       : null;
 
@@ -57,7 +57,7 @@ export class PrecisoAjudaService {
       });
   }
 
-  async localizaID(id: string): Promise<PRECISOAJUDA> {
+  async localizaID(id: string): Promise<PrecisoAjuda> {
     const formAjuda = await this.precisoAjudaRepository.findOne({
       where: { ID: id },
     });
