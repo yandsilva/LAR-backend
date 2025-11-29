@@ -2,7 +2,7 @@ import * as bcrypt from 'bcrypt';
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { INSTITUTION } from '../institution/entities/institution.entity';
 
-@Entity('PRECISOAJUDA')
+@Entity('precisoajuda')
 export class PRECISOAJUDA {
   @PrimaryColumn()
   ID: string;

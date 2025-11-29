@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, OneToMany, PrimaryColumn } from 'typeorm';
 import { PRECISOAJUDA } from '../../FormularioPrecisoAjuda/precisoAjuda.Entity';
 import { QUEROAJUDAR } from 'src/modules/FormularioQueroAjudar/queroAjudar.Entity';
 
-@Entity('INSTITUTION')
+@Entity('institution')
 export class INSTITUTION {
   @PrimaryColumn()
   ID: string;

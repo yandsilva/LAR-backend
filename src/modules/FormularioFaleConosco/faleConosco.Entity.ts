@@ -1,7 +1,7 @@
 import * as bcrypt from 'bcrypt';
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 
-@Entity('FALECONOSCO')
+@Entity('faleconosco')
 export class FALECONOSCO {
   @PrimaryColumn()
   ID: string;
