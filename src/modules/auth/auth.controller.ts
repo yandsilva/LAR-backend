@@ -39,9 +39,10 @@ export class AuthController {
 
     res.cookie(COOKIE_NAME, token, {
       httpOnly: true,
-      secure: false,
+      secure: true,
       sameSite: 'lax',
       maxAge: 3600 * 1000,
+      path: '/',
     });
 
     const { PASSWORD, ...institutionData } = institution;
