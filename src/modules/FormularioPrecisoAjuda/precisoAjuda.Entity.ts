@@ -2,7 +2,7 @@ import * as bcrypt from 'bcrypt';
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { INSTITUTION } from '../institution/entities/institution.entity';
 
-@Entity()
+@Entity('PRECISOAJUDA')
 export class PRECISOAJUDA {
   @PrimaryColumn()
   ID: string;
@@ -70,11 +70,9 @@ export class PRECISOAJUDA {
   @Column()
   ABUSOMORAL: boolean;
 
-
   @ManyToOne(() => INSTITUTION, (instituicao) => instituicao.PRECISOAJUDA, {
-    onDelete: 'SET NULL'
+    onDelete: 'SET NULL',
   })
   @JoinColumn({ name: 'INSTITUTION_ID' }) // FK no banco
   INSTITUICAO: INSTITUTION;
-
 }
