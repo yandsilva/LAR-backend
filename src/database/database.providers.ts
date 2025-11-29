@@ -16,7 +16,7 @@ export const databaseProviders = [
         username: 'vitali04_adm_lugardeapoio',
         password: 'Apoiamos!@#123',
         database: 'vitali04_lugardeapoio',
-        entities: [join(__dirname, '/../**/*.entity.{js,ts}')],
+        entities: [join(__dirname, '**/*.entity.{js,ts}')],
         synchronize: false,
       });
       return dataSource.initialize();
