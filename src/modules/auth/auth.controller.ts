@@ -34,12 +34,11 @@ export class AuthController {
     }
     const token = await this.authService.login(institution);
 
-    const isProd = process.env.NODE_ENV === 'production';
     const COOKIE_NAME = process.env.COOKIE_NAME || 'auth_token';
 
     res.cookie(COOKIE_NAME, token, {
       httpOnly: true,
-      secure: isProd,
+      secure: false,
       sameSite: 'lax',
       maxAge: 3600 * 1000,
       path: '/',
