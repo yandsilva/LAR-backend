@@ -46,19 +46,20 @@ export class InstitutionController {
     return result;
   }
 
-  @Post(':id')
+  @Post('update-profile')
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(FileInterceptor('IMAGE', institutionUploadConfig))
   async update(
-    @Param('id') id: string,
+    @Req() req,
     @Body() dto: UpdateInstitutionDto,
     @UploadedFile() IMAGE?: Express.Multer.File,
   ) {
-    console.log(id, dto, IMAGE);
+    const userId = req.user.ID;
+    console.log(userId, dto, IMAGE);
     if (IMAGE) {
       dto.IMAGE = `/uploads/institutions/images/${IMAGE.filename}`;
     }
-    const updated = await this.institutionService.update(id, dto);
+    const updated = await this.institutionService.update(userId, dto);
 
     return {
       success: true,

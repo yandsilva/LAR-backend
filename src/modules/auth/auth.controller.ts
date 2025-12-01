@@ -49,6 +49,7 @@ export class AuthController {
     return {
       success: true,
       institution: institutionData,
+      ID: institution.ID,
     };
   }
 

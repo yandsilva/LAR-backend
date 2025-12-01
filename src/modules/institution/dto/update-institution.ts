@@ -8,6 +8,14 @@ export class UpdateInstitutionDto {
     example: '(14)9 9999-9999',
     description: 'Telefone de contato da instituição',
   })
+  EMPRESA?: string;
+
+  @IsOptional()
+  @IsString()
+  @ApiPropertyOptional({
+    example: '(14)9 9999-9999',
+    description: 'Telefone de contato da instituição',
+  })
   PHONE?: string;
 
   @IsOptional()
@@ -19,7 +27,6 @@ export class UpdateInstitutionDto {
   ABOUT?: string;
 
   @IsOptional()
-  @IsUrl({}, { message: 'Imagem deve ser uma URL válida' })
   @ApiPropertyOptional({
     example: 'https://meuservidor.com/imagens/instituicao-logo.png',
     description: 'Imagem representativa ou logo da instituição',
@@ -27,10 +34,23 @@ export class UpdateInstitutionDto {
   IMAGE?: string;
 
   @IsOptional()
-  @IsUrl({}, { message: 'URL deve ser válida' })
   @ApiPropertyOptional({
     example: 'https://institutolumina.org',
     description: 'Site oficial ou página principal da instituição',
   })
-  URL?: string;
+  FACEBOOK?: string;
+
+  @IsOptional()
+  @ApiPropertyOptional({
+    example: 'https://institutolumina.org',
+    description: 'Site oficial ou página principal da instituição',
+  })
+  INSTAGRAM?: string;
+
+  @IsOptional()
+  @ApiPropertyOptional({
+    example: 'https://institutolumina.org',
+    description: 'Site oficial ou página principal da instituição',
+  })
+  LINKEDIN?: string;
 }

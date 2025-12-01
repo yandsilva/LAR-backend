@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Request } from 'express';
 import { Strategy } from 'passport-jwt';
@@ -26,9 +26,12 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   async validate(payload: any) {
     const institution = await this.institutionService.findById(payload.sub);
     if (!institution) {
-      throw new Error('Instituição não encontrada');
+      throw new UnauthorizedException('Instituição não encontrada');
     }
-    const { PASSWORD, ...result } = institution;
-    return result;
+    return {
+      ID: institution.ID,
+      EMAIL: institution.EMAIL,
+      NAME: institution.EMPRESA,
+    };
   }
 }
