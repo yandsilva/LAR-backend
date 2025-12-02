@@ -55,7 +55,6 @@ export class InstitutionController {
     @UploadedFile() IMAGE?: Express.Multer.File,
   ) {
     const userId = req.user.ID;
-    console.log(userId, dto, IMAGE);
     if (IMAGE) {
       dto.IMAGE = `/uploads/institutions/images/${IMAGE.filename}`;
     }
@@ -76,7 +75,7 @@ export class InstitutionController {
     body: {
       currentPassword: string;
       newPassword: string;
-      confirmNewPassword: string;
+      confirmPassword: string;
     },
   ) {
     return this.institutionService.handlePasswordReset(req.user.ID, body);

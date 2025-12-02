@@ -90,11 +90,11 @@ export class InstitutionService {
     {
       currentPassword,
       newPassword,
-      confirmNewPassword,
+      confirmPassword,
     }: {
       currentPassword: string;
       newPassword: string;
-      confirmNewPassword: string;
+      confirmPassword: string;
     },
   ) {
     const institution = await this.institutionRepository.findOne({
@@ -105,7 +105,7 @@ export class InstitutionService {
       throw new NotFoundException('Instituição não encontrada');
     }
 
-    if (newPassword !== confirmNewPassword) {
+    if (newPassword !== confirmPassword) {
       throw new ConflictException('As novas senhas não coincidem');
     }
 
