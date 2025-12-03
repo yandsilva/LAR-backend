@@ -46,7 +46,7 @@ export class InstitutionController {
     return result;
   }
 
-  @Post('update-profile')
+  @Put('update-profile')
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(FileInterceptor('IMAGE', institutionUploadConfig))
   async update(

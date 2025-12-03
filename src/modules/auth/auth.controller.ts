@@ -38,8 +38,8 @@ export class AuthController {
 
     res.cookie(COOKIE_NAME, token, {
       httpOnly: true,
-      secure: false,
-      sameSite: 'lax',
+      secure: true,
+      sameSite: 'none',
       maxAge: 3600 * 1000,
       path: '/',
     });
