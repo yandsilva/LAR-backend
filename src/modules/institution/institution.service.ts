@@ -33,7 +33,17 @@ export class InstitutionService {
 
   async findAll() {
     return this.institutionRepository.find({
-      select: ['ID', 'EMPRESA', 'PHONE'],
+      select: [
+        'ID',
+        'EMPRESA',
+        'PHONE',
+        'ABOUT',
+        'IMAGE',
+        'EMAIL',
+        'FACEBOOK',
+        'INSTAGRAM',
+        'LINKEDIN',
+      ],
     });
   }
 
